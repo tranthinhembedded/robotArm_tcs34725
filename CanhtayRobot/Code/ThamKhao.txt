@@ -1,0 +1,55 @@
+#define F_CPU 16000000UL  // Tần số xung nhịp của Arduino Nano là 16 MHz
+#define BAUD 115200         // Tốc độ baud mặc định là 9600
+#define MYUBRR F_CPU/16/BAUD-1  // Công thức tính giá trị UBRR cho UART
+
+void UART_init(unsigned int ubrr) {
+    // Thiết lập tốc độ baud (ghi vào các thanh ghi UBRR0H và UBRR0L)
+    UBRR0H = (unsigned char)(ubrr >> 8);  // Byte cao của UBRR
+    UBRR0L = (unsigned char)ubrr;         // Byte thấp của UBRR
+
+    // Kích hoạt bộ nhận (RX) và bộ truyền (TX)
+    UCSR0B = (1 << RXEN0) | (1 << TXEN0);  // Bật nhận và truyền
+
+    // Thiết lập định dạng khung dữ liệu: 8 bit dữ liệu, 1 bit stop, không parity
+    UCSR0C = (1 << UCSZ01) | (1 << UCSZ00); // Cấu hình 8 bit dữ liệu
+}
+
+void UART_transmit(unsigned char data) {
+    // Đợi cho bộ đệm truyền trống
+    while (!(UCSR0A & (1 << UDRE0)))
+        ;  // Kiểm tra cờ UDRE0 trong UCSR0A, báo rằng bộ đệm truyền đã trống
+
+    // Ghi dữ liệu vào thanh ghi UDR0, bắt đầu truyền
+    UDR0 = data;
+}
+
+unsigned char UART_receive(void) {
+    // Đợi cho dữ liệu được nhận (cờ RXC0 trong UCSR0A được set)
+    while (!(UCSR0A & (1 << RXC0)))
+        ;
+
+    // Đọc và trả về byte dữ liệu từ thanh ghi UDR0
+    return UDR0;
+}
+
+void UART_sendString(const char *str) {
+    while (*str) {
+        UART_transmit(*str++); // Truyền từng ký tự trong chuỗi
+    }
+}
+
+void setup() {
+    // Khởi tạo UART với tốc độ baud đã tính toán
+    UART_init(MYUBRR);
+
+    // Gửi chuỗi ký tự thông báo rằng UART đã khởi tạo thành công
+    UART_sendString("UART Initialized\r\n");
+}
+
+void loop() {
+    // Kiểm tra xem có dữ liệu nào được nhận không
+    if (UCSR0A & (1 << RXC0)) { // Nếu có dữ liệu nhận được
+        unsigned char receivedChar = UART_receive(); // Nhận dữ liệu
+        UART_transmit(receivedChar); // Echo lại dữ liệu đã nhận
+    }
+}

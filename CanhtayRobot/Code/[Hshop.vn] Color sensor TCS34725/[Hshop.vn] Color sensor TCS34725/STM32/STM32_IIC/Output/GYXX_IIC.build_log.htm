@@ -1,0 +1,50 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.17.0.0
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: ll Microsoft, Microsoft, LIC=9WSNN-Y19Q4-Y85FK-ZK88H-CALNZ-38DW3
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Standard  Version: 5.17
+Toolchain Path:  D:\Program Files\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 1 (build 61)
+Assembler:       Armasm.exe V5.06 update 1 (build 61)
+Linker/Locator:  ArmLink.exe V5.06 update 1 (build 61)
+Library Manager: ArmAr.exe V5.06 update 1 (build 61)
+Hex Converter:   FromElf.exe V5.06 update 1 (build 61)
+CPU DLL:         SARMCM3.DLL V5.17
+Dialog DLL:      DCM.DLL V1.13.4.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
+Dialog DLL:      TCM.DLL V1.14.6.0
+ 
+<h2>Project:</h2>
+G:\keil\gy\GY33\GYTCS3414\gy33\stm32\STM32_IIC\user\GYXX_IIC.uvproj
+Project File Date:  03/28/2016
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 1 (build 61)', folder: 'D:\Program Files\Keil_v5\ARM\ARMCC\Bin'
+Build target 'GYXX_IIC'
+compiling main.c...
+main.c(56): warning:  #177-D: variable "data" was declared but never referenced
+  	u8  raw_data[9]={0},data=0;
+main.c(58): warning:  #550-D: variable "rgbc" was set but never used
+  	RGBC rgbc={0,0,0,0};
+main.c(59): warning:  #550-D: variable "rgb" was set but never used
+  	RGB rgb={0,0,0};
+main.c(60): warning:  #550-D: variable "CT" was set but never used
+  	uint16_t CT=0,Lux=0;
+main.c(60): warning:  #550-D: variable "Lux" was set but never used
+  	uint16_t CT=0,Lux=0;
+main.c(61): warning:  #550-D: variable "color" was set but never used
+  	u8 color=0;
+main.c: 6 warnings, 0 errors
+linking...
+Program Size: Code=6216 RO-data=268 RW-data=52 ZI-data=1636  
+"..\Output\GYXX_IIC.axf" - 0 Error(s), 6 Warning(s).
+Build Time Elapsed:  00:00:01
+</pre>
+</body>
+</html>
